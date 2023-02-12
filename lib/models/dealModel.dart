@@ -8,9 +8,9 @@ String? item4;
 int? price;
 int? discount;
 String? uid;
+String? picture;
 
-
-DealModel({this.dealNo,this.item1,this.item2,this.item3,this.item4,this.price,this.discount,this.uid});
+DealModel({this.dealNo,this.item1,this.item2,this.item3,this.item4,this.price,this.discount,this.uid,required this.picture});
 
  DealModel.fromMap(Map<String, dynamic> map){
   dealNo =map['dealNo'];
@@ -21,6 +21,8 @@ DealModel({this.dealNo,this.item1,this.item2,this.item3,this.item4,this.price,th
   price =map['price'];
   discount=map['discount'];
   uid=map['uid'];
+   picture=map['picture'];
+   
  }
 
  Map<String, dynamic> toMap(){
@@ -32,7 +34,8 @@ DealModel({this.dealNo,this.item1,this.item2,this.item3,this.item4,this.price,th
     "item4":item4,
     "price":price,
     "discount":discount,
-    'uid':uid
+    'uid':uid,
+    'picture':picture
 
 
 

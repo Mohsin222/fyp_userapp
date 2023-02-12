@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:maps_launcher/maps_launcher.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'package:provider/provider.dart';
 import 'package:resturant_user_app/components/rate_dialog.dart';
@@ -10,8 +11,10 @@ import 'package:resturant_user_app/views/a11.dart';
 import 'package:resturant_user_app/views/aboutusScreen.dart';
 import 'package:resturant_user_app/views/main_screen.dart';
 import 'package:resturant_user_app/views/map.dart';
+import 'package:resturant_user_app/views/profile_screen.dart';
 import 'package:resturant_user_app/views/ratingScreen.dart';
 import 'package:resturant_user_app/views/settings_screen.dart';
+import 'package:resturant_user_app/views/tables.dart';
 import 'package:resturant_user_app/widgets/dialog.dart';
 
 import '../constants/routes.dart';
@@ -65,22 +68,28 @@ class DrawerWidget extends StatelessWidget {
                 // runSpacing: 16,
                 children: [
                   drawerTile(
-                      icon: Icons.home,
+                      icon: Icons.table_restaurant,
                       press: () {
-                        Navigator.pushNamed(context, Router1.tableScreen);
+                        Navigator.push(context, PageTransition(type: PageTransitionType.leftToRightWithFade, child: TablesScreen()));
+
+                        // Navigator.pushNamed(context, Router1.tableScreen);
                       },
                       title: 'Tables'),
                   drawerTile(
                       icon: Icons.home,
                       press: () {
-                        Navigator.pushNamed(context, Router1.profileScreen);
+                         Navigator.push(context, PageTransition(type: PageTransitionType.leftToRightWithFade, child: ProfileScreen()));
+
+                        // Navigator.pushNamed(context, Router1.profileScreen);
                       },
                       title: 'Profile'),
                   drawerTile(icon: Icons.menu, press: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> AboutUsScreen()));
+                     Navigator.push(context, PageTransition(type: PageTransitionType.leftToRightWithFade, child: AboutUsScreen()));
+
+                    // Navigator.push(context, MaterialPageRoute(builder: (context)=> AboutUsScreen()));
                   }, title: 'About Us'),
                   drawerTile(
-                      icon: Icons.person,
+                      icon: Icons.album_outlined,
                       press: () {
                         // Navigator.push(
                         //     context,
@@ -93,19 +102,17 @@ class DrawerWidget extends StatelessWidget {
                   Divider(),
 //Settings
     drawerTile(
-                      icon: Icons.logout,
+                      icon: Icons.settings,
                       press: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return SettingsScreen();
-                        }));
+                         Navigator.push(context, PageTransition(type: PageTransitionType.leftToRightWithFade, child: SettingsScreen()));
+                  
                       },
                       title: 'Settings'),
 
                       //maps
 
                           drawerTile(
-                      icon: Icons.map,
+                      icon: Icons.directions_car,
                       press: () {
                         MapsLauncher.launchCoordinates(
                     24.914015, 67.106898, 'Shafiq Resturant');

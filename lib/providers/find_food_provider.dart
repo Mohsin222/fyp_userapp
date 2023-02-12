@@ -18,15 +18,18 @@ class FindFood extends ChangeNotifier{
   FindFood(){
     getListOfFood();
     getListOfDeals();
-getAllbookedTables();
+// getAllbookedTables();
   }
 
 
   List<UserModel> bookTables=[];
   int bookedTables=0;
   void getAllbookedTables()async{
-    bookedTables=0;
+
+  
      Timer.periodic(Duration(seconds: 5), (timer)async {
+        bookedTables=0;
+          log('MOSHS');
     CollectionReference _collectionRef =
     FirebaseFirestore.instance.collection('Users');
    QuerySnapshot querySnapshot = await _collectionRef.get();
@@ -35,20 +38,21 @@ getAllbookedTables();
     // final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
 UserModel userModel =UserModel();
 
-    notifyListeners();
+    
     querySnapshot.docs.forEach((element) { 
       bookTables.add( UserModel.fromMap(element.data() as Map<String,dynamic>));
 
       });
         
       for (var element in bookTables) {
-      print(element.booktable.toString());
+      // print(element.booktable.toString());
         if(element.booktable ==true){
         bookedTables += 1;
+        notifyListeners();
         }
   // print(bookedTables);
       }
-
+// print(bookTables);
       notifyListeners();
     });
 

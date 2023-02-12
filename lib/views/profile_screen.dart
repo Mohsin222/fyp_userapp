@@ -163,7 +163,10 @@ appBar: appBar,
                   Padding(
       padding: const EdgeInsets.only(bottom: 35.0),
       child: TextField(
+        keyboardType: TextInputType.number,
         controller: phoneController,
+        maxLength: 11,
+     
         
         decoration: InputDecoration(
           

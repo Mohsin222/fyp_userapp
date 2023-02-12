@@ -7,7 +7,7 @@ import 'package:resturant_user_app/providers/find_food_provider.dart';
 import 'package:resturant_user_app/views/viewallfood.dart';
 import 'package:resturant_user_app/widgets/appbar.dart';
 
-class TitPage extends StatelessWidget {
+class ViewAllDeal extends StatelessWidget {
 
 
 final _controller =PageController();
@@ -15,7 +15,7 @@ final _controller =PageController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar,
+ 
       body: Consumer<FindFood>(
  
         builder: (context, value, child) {
@@ -31,7 +31,7 @@ final _controller =PageController();
                 dealModel: dealModel,
       
                         context: context,
-                        imgUrl: ("https://plus.unsplash.com/premium_photo-1667682209368-2e3629cceaa5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8YnVyZ2VyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60")
+                        imgUrl: (dealModel.picture.toString())
                       );
        
             })
@@ -61,7 +61,7 @@ final _controller =PageController();
             // border: Border.all(),
             // borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
-                image: NetworkImage(imgUrl), fit: BoxFit.fill,colorFilter:  ColorFilter.mode(Colors.black, 
+                image: NetworkImage(dealModel.picture.toString()), fit: BoxFit.fill,colorFilter:  ColorFilter.mode(Colors.black, 
       BlendMode.dstATop),)),
         child: Container(
           padding: EdgeInsets.all(10),
@@ -69,9 +69,16 @@ final _controller =PageController();
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-          
+              SizedBox(height: 20,),
+              Align
+              (
+                alignment: Alignment.topLeft,
+                child: IconButton(onPressed: (){
+                  Navigator.pop(context);
+                }, icon: Icon(Icons.arrow_back,size: 40,color: Colors.white,))),
+          Spacer(),
               Text(
-                'Deal1',
+                'Deal ${dealModel.dealNo}',
                 style: Theme.of(context)
                     .textTheme
                     .headline3!

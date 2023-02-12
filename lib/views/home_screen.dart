@@ -5,7 +5,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:provider/provider.dart';
-import 'package:resturant_user_app/views/d1.dart';
+import 'package:resturant_user_app/views/viewall_deal.dart';
 import 'package:resturant_user_app/views/deals_Details.dart';
 import 'package:resturant_user_app/views/viewallfood.dart';
 import 'package:resturant_user_app/widgets/add_widget.dart';
@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
 
 var x=0;
 
-
+final scaffoldKey = GlobalKey<ScaffoldState>();
 ScrollController scrollController =ScrollController();
   @override
   Widget build(BuildContext context) {
@@ -33,18 +33,30 @@ ScrollController scrollController =ScrollController();
     
     return Scaffold(
       // backgroundColor: Color.fromRGBO(255, 255, 255, 1),
-
+key: scaffoldKey,
      bottomNavigationBar: AddWidget(),
+     
       appBar: AppBar(
+      
+         leading: IconButton(icon: Icon(Icons.menu,color: Colors.white,), onPressed: () { 
+      if(scaffoldKey.currentState!.isDrawerOpen){
+              scaffoldKey.currentState!.closeDrawer();
+              //close drawer, if drawer is open
+        }else{
+              scaffoldKey.currentState!.openDrawer();
+              //open drawer, if drawer is closed
+        }
+          
+          },),
         backgroundColor:  Color.fromARGB(255, 16, 151, 86),
-        actions: [IconButton(onPressed: (){
-          Provider.of<FindFood>(context,listen: false).getAllbookedTables();
-        }, icon: Icon(Icons.add))],
+        actions: [],
       ),
-      drawer: Container(
-   
-        width: MediaQuery.of(context).size.width/1.5,
-        child: DrawerWidget()),
+      
+      drawer: Drawer(
+        
+        child: DrawerWidget(),
+      ),
+
 
       body: Container(
          height: MediaQuery.of(context).size.height,
@@ -149,7 +161,7 @@ ScrollController scrollController =ScrollController();
 
                     InkWell(
                       onTap: (){
-                        Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: TitPage()));
+                        Navigator.push(context, PageTransition(type: PageTransitionType.bottomToTop, child: ViewAllDeal()));
 
                         // Navigator.push(context, MaterialPageRoute(builder: (context){
                         //   return DealsDetailScreen();
@@ -181,7 +193,7 @@ ScrollController scrollController =ScrollController();
                             child: Container(
                                     
                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
-                                 image: DecorationImage(image: NetworkImage('https://images.unsplash.com/photo-1606598998487-47a3787d03b2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9kfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60'),fit: BoxFit.cover),
+                                 image: DecorationImage(image: NetworkImage(dealModel.picture.toString()),fit: BoxFit.cover),
                                  
                                                 border: Border.all(),
                                                 

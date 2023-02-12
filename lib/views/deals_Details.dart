@@ -21,7 +21,7 @@ class DealsDetailScreen extends StatelessWidget {
                 alignment: Alignment.center,
                 height: 100,
                 child: Text(
-                  'Deals',
+                  'Deals'.toUpperCase(),
                   style: Theme.of(context).textTheme.headline1,
                 ),
               ),
@@ -43,7 +43,7 @@ class DealsDetailScreen extends StatelessWidget {
                       child: dealCard(
                         dealModel: dealModel,
                         context: context,
-                        imgUrl: ("https://plus.unsplash.com/premium_photo-1667682209368-2e3629cceaa5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8YnVyZ2VyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"),
+                        imgUrl: (dealModel.picture.toString()),
                         
                       ),
                       );
@@ -71,7 +71,7 @@ class DealsDetailScreen extends StatelessWidget {
             border: Border.all(),
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
-                image: NetworkImage(imgUrl), fit: BoxFit.fill, opacity: 0.8)),
+                image: NetworkImage(dealModel.picture.toString()), fit: BoxFit.fill, opacity: 0.8)),
         child: Container(
           padding: EdgeInsets.all(10),
           child: Column(
@@ -80,7 +80,7 @@ class DealsDetailScreen extends StatelessWidget {
             children: [
               Spacer(),
               Text(
-                'Deal +${dealModel.dealNo}',
+                'Deal ${dealModel.dealNo}',
                 style: Theme.of(context)
                     .textTheme
                     .headline3!

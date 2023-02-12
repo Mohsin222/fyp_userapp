@@ -68,13 +68,14 @@ class MyApp extends StatelessWidget {
     ],
     child:  MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
        
 
          primarySwatch: Colors.blue,
         useMaterial3: true,
         scaffoldBackgroundColor: Colors.white,
-
+ iconTheme: IconThemeData(color: Colors.green),
         textTheme: TextTheme(
 
              headline1: TextStyle(

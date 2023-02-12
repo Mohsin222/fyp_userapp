@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:resturant_user_app/constants/loading_circal.dart';
 import 'package:resturant_user_app/services/background_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 
 import '../providers/auth_provider.dart';
@@ -19,6 +20,15 @@ class TableBookWidget extends StatefulWidget {
 }
 
 class _TableBookWidgetState extends State<TableBookWidget> {
+  TimeOfDay? bookedTime;
+    void changeEndTime(TimeOfDay startTimeOfDay) {
+    DateTime today = DateTime.now();
+    DateTime customDateTime = DateTime(today.year, today.month, today.day,
+        startTimeOfDay.hour, startTimeOfDay.minute);
+
+        print(TimeOfDay.fromDateTime(customDateTime.add(Duration(minutes: 2))));
+        bookedTime =TimeOfDay.fromDateTime(customDateTime.add(Duration(minutes: 2)));
+  }
   @override
   Widget build(BuildContext context) {
     return Consumer<AuthProvider>(
@@ -80,7 +90,7 @@ class _TableBookWidgetState extends State<TableBookWidget> {
               "booktable":true
     
             }
-          ).then((value) {
+          ).then((value) async{
     
             
               Workmanager()
@@ -93,8 +103,13 @@ class _TableBookWidgetState extends State<TableBookWidget> {
                                   'array': [1, 2, 3],
                                
                                 },
+
+
                                 initialDelay: Duration(minutes: 1));
-    
+                                changeEndTime(TimeOfDay.now());
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+
+          prefs.setString('book_time',bookedTime!.hour.toString()+':'+ bookedTime!.minute.toString(),);
     //for model dataset
                   
           }).catchError((e){
@@ -120,7 +135,7 @@ class _TableBookWidgetState extends State<TableBookWidget> {
                       
                       alignment: Alignment.center,
                       padding: EdgeInsets.all(20),
-                      child: Text('BOOK Table'),
+                      child: Text('BOOK Table',style: TextStyle(color: Colors.white),),
                     ),
                   ):
                   Container(

@@ -15,6 +15,7 @@ import 'package:resturant_user_app/providers/find_food_provider.dart';
 import 'package:resturant_user_app/services/background_services.dart';
 import 'package:resturant_user_app/widgets/appbar.dart';
 import 'package:resturant_user_app/widgets/table_book_wodget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 
 
@@ -39,10 +40,13 @@ class _TablesScreenState extends State<TablesScreen> {
    List<UserModel> bookTables=[];
   int bookedTables=0;
   void getAllbookedTables()async{
-    setState(() {
-  bookedTables=0;
-});
-     Timer.periodic(Duration(seconds: 10), (timer)async {
+
+
+    //  Timer.periodic(Duration(seconds: 10), (timer)async {
+ 
+  
+                 bookedTables=0;
+   
     CollectionReference _collectionRef =
     FirebaseFirestore.instance.collection('Users');
    QuerySnapshot querySnapshot = await _collectionRef.get();
@@ -56,7 +60,7 @@ UserModel userModel =UserModel();
       bookTables.add( UserModel.fromMap(element.data() as Map<String,dynamic>));
 
       });
-        
+         bookedTables=0;
       for (var element in bookTables) {
       print(element.booktable.toString());
         if(element.booktable ==true){
@@ -75,7 +79,7 @@ UserModel userModel =UserModel();
     
 
      
-    });
+    // });
 
  
   }
@@ -90,11 +94,20 @@ UserModel userModel =UserModel();
   void initState() {
     // TODO: implement initState
     super.initState();
-    
+    getAllbookedTables();
   }
+      var time;
+  getTime()async{
+               SharedPreferences prefs = await SharedPreferences.getInstance();
+        time=    prefs.getString("book_time");
+        // setState(() {
+          
+        // });
+  }
+
   @override
   Widget build(BuildContext context) {
-    
+    getTime();
     return Scaffold(
   //     appBar: AppBar(title: Text('Tables'),
   //     actions: [IconButton(onPressed: ()async{
@@ -181,10 +194,11 @@ height: 150,
                   builder: (context, snapshot) {
                       DocumentSnapshot snp =snapshot.data as DocumentSnapshot;
                   
-                    
+          
                    if(snapshot.data !=null){
                      if(snapshot.connectionState ==ConnectionState.active){
                       if(snapshot.hasData){
+                
                 
                     return Container(
                    height: 120,
@@ -207,7 +221,8 @@ width: 150,
                             ),
                               Container(child: Text('4 chairs',style: TextStyle(color: Colors.black,fontSize: 22),)),
 
-                                    Container(child: Text('Table book for 5 minutes',style: TextStyle(color: Colors.black,fontSize: 10),)),
+                                    // Container(child: Text('Table book for 5 minutes',style: TextStyle(color: Colors.black,fontSize: 10),)),
+                                     Container(child: Text('Table book till ${time}',style: TextStyle(color: Colors.black,fontSize: 10),)),
                           ],
                         ),
                       )
@@ -258,6 +273,7 @@ width: 150,
               
                 
                 builder: ((context, snapshot) {
+          
               if (snapshot.connectionState == ConnectionState.active){
               
                  if(snapshot.hasData){
@@ -267,6 +283,7 @@ width: 150,
                    Consumer<FindFood>(
                  
                      builder: (context, value,child) {
+               
                        return GridView.builder(
                         // itemCount: snp['Length'],
                                  
@@ -277,10 +294,13 @@ width: 150,
                               mainAxisSpacing: 20
                                    
                                  ),
+                  
                                    //    itemCount: snp['empty']-snp['booked'],
-                                   itemCount: bookedTables <=0?
-                                   snp['Length']-snp['filled']:
-                                   snp['Length']-snp['filled']-value.bookedTables ,
+                                  //  itemCount: bookedTables >=0?
+                                  //  snp['Length']-snp['filled']- bookedTables:
+              itemCount:      bookedTables <=0?
+              snp['Length']-snp['filled'] 
+              :snp['Length']-snp['filled']- bookedTables ,
                         itemBuilder: (context,index){
                         // return Container(
                                     

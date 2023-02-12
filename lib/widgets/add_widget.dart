@@ -13,16 +13,59 @@ class AddWidget extends StatefulWidget {
 }
 
 class _AddWidgetState extends State<AddWidget> {
+
+  
+    bool isloding=false;
+  late BannerAd bannerAd;
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+     _initBannerAd();
+  }
+  void _initBannerAd(){
+
+    
+    bannerAd =BannerAd(
+      size: AdSize.banner,
+     adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+      listener: BannerAdListener(
+onAdLoaded: (val){
+isloding=true;
+setState(() {
+  
+});
+},
+onAdFailedToLoad: (ad,err){}
+      ), 
+      request: AdRequest());
+
+      bannerAd.load();
+    setState(() {
+      
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<AddsProvider>(builder: (context, value, child) {
-        return value.isloding  ? Container(
-          height: value.bannerAd.size.height.toDouble(),
-           width: value.bannerAd.size.width.toDouble(),
-           child: AdWidget(ad: value.bannerAd,),
+    // return Consumer<AddsProvider>(builder: (context, value, child) {
+    //     return value.isloding  ? Container(
+    //       height: value.bannerAd.size.height.toDouble(),
+    //        width: value.bannerAd.size.width.toDouble(),
+    //        child: AdWidget(ad: value.bannerAd,),
+    //     )
+    //     :SizedBox();
+    //   },);
+
+
+         return isloding  ? Container(
+          height: bannerAd.size.height.toDouble(),
+           width: bannerAd.size.width.toDouble(),
+           child: AdWidget(ad: bannerAd,),
         )
         :SizedBox();
-      },);
   }
 }
 

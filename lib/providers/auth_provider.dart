@@ -86,7 +86,8 @@ try {
 
 if(logedUser !=null){
   loading=false;
-  Navigator.pushReplacementNamed(context,Router1.homeScreen );
+  // Navigator.pushReplacementNamed(context,Router1.homeScreen );
+  Navigator.pushNamedAndRemoveUntil(context, Router1.homeScreen, (route) => false);
     await savedonLocal();
 }
 return logedUser;
@@ -245,12 +246,14 @@ if(file !=null ){
 }
    if(phone !=''){
      logedUser!.phone=phone;
-   }
-
-   if(name !=''){
+     if(name !=''){
     logedUser!.fullname=name;
  
    }
+   }
+
+   
+
 
 
   // logedUser!.profilepic =url;
